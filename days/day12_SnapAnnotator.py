@@ -1,31 +1,4 @@
-"""
-BUILDCORED ORCAS — Day 12: SnapAnnotator
-==========================================
-Press a key to capture a webcam frame.
-Send it to a local vision-language model.
-Get an object list and ask follow-up questions.
 
-Hardware concept: Vision Inference Pipeline
-SENSOR → ISP → MEMORY → INFERENCE → ACTION
-Same pipeline runs on Jetson Nano, RPi + Coral,
-and every embedded vision system. You're building
-the software version on your laptop.
-
-YOUR TASK:
-1. Tune the VLM prompt for structured output (TODO #1)
-2. Parse the model response into a clean object list (TODO #2)
-3. Run it: python day12_starter.py
-4. Push to GitHub before midnight
-
-PREREQUISITES:
-- ollama running: ollama serve
-- Vision model pulled: ollama pull moondream
-
-CONTROLS:
-- SPACE → capture frame and analyze
-- 1-9   → ask follow-up about object N from last capture
-- q     → quit
-"""
 
 import cv2
 import subprocess
@@ -34,10 +7,6 @@ import tempfile
 import os
 import sys
 import time
-
-# ============================================================
-# CHECK OLLAMA + MOONDREAM
-# ============================================================
 
 def check_setup():
     try:
@@ -62,10 +31,6 @@ MODEL = "moondream"
 MAX_IMAGE_SIZE = 512  # Resize frames before sending — critical for speed
 
 
-# ============================================================
-# VLM QUERY
-# ============================================================
-
 def query_vlm(image_path, prompt):
     """Send an image + prompt to moondream and get a response."""
     try:
@@ -79,21 +44,6 @@ def query_vlm(image_path, prompt):
         return "[Model timed out]"
     except Exception as e:
         return f"[Error: {e}]"
-
-
-# ============================================================
-# TODO #1: VLM prompt
-# ============================================================
-# The prompt controls what kind of answer you get.
-# Vague prompt → vague answer. Structured prompt → parseable list.
-#
-# Try to get the model to return a numbered list:
-#   1. laptop
-#   2. coffee mug
-#   3. notebook
-#
-# So we can show students "1-9 = ask about object N".
-#
 
 DESCRIBE_PROMPT = (
     "List the main objects visible in this image. "
