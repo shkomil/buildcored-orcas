@@ -1,4 +1,4 @@
-"""
+Copy-Item "days\day13_starter.py" "day13-dailydebrief\dailydebrief.py" -Force"""
 BUILDCORED ORCAS — Day 13: DailyDebrief
 Collect your day's activity and get an AI summary.
 
